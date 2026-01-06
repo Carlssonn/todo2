@@ -38,13 +38,35 @@ class _TodoPageState extends State<TodoPage> {
             ),
           ),
           Expanded(
-            child: ListView.builder(
-              padding: EdgeInsets.all(10),
-              itemCount: todos.length,
-              itemBuilder: (context, index) {
-                return TodoCard(todoModel: todos[index]);
-              },
-            ),
+            child: todos.isNotEmpty
+                ? ListView.builder(
+                    padding: EdgeInsets.all(10),
+                    itemCount: todos.length,
+                    itemBuilder: (context, index) {
+                      return TodoCard(
+                        todoModel: todos[index],
+                        delete: () {
+                          setState(() {
+                            todos.removeAt(index);
+                          });
+                        },
+                        edit: () {
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (context) => TodoBottomShet(
+                              add: (todo) {
+                                setState(() {
+                                  todos[index] = todo;
+                                });
+                              },
+                              todoModel: todos[index],
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  )
+                : Center(child: Text('Пусто')),
           ),
         ],
       ),
@@ -52,6 +74,7 @@ class _TodoPageState extends State<TodoPage> {
         onTap: () {
           showModalBottomSheet(
             context: context,
+            isScrollControlled: true,
             builder: (context) => TodoBottomShet(
               add: (todo) {
                 setState(() {
