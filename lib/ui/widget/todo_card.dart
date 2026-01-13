@@ -20,110 +20,63 @@ class _TodoCardState extends State<TodoCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10),
-      width: 100,
-      height: 95,
-      margin: EdgeInsets.fromLTRB(12, 4, 12, 4),
+      padding: EdgeInsets.all(10),
+      margin: EdgeInsets.fromLTRB(6, 3, 1, 8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: Color(0xFF5566FF),
+        color: Colors.grey,
       ),
-      child: Column(
+      child: Row(
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  widget.todoModel.title,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 19,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              Checkbox(
-                value: widget.todoModel.dene,
-                onChanged: (_) {
-                  setState(() {
-                    widget.todoModel.dene = !widget.todoModel.dene;
-                  });
-                },
-              ),
-              IconButton(
-                onPressed: () {
-                  showAdaptiveDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: Center(child: Text('Внимание')),
-                        content: Text('Вы действительно хотите удалить?'),
-                        actionsAlignment: MainAxisAlignment.spaceEvenly,
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              width: 122,
-                              height: 35,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(color: Colors.red),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  'Отмена',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.red,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFF5566FF),
-                              minimumSize: Size(120, 40),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                            ),
-                            onPressed: () {
-                              widget.delete();
-                              Navigator.pop(context);
-                            },
-                            child: Text(
-                              'Удалить',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                },
-                icon: Icon(Icons.delete),
-                color: Colors.white,
-              ),
-
-              IconButton(
-                onPressed: widget.edit,
-                icon: Icon(Icons.edit),
-                color: Colors.white,
-              ),
-            ],
+          Container(
+            width: 100,
+            height: 100,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: Colors.blue,
+            ),
           ),
-          Text(
-            widget.todoModel.desc,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          widget.todoModel.title,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 19,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {},
+                        icon: Icon(Icons.density_small_sharp),
+                      ),
+                      IconButton(
+                        onPressed: widget.edit,
+                        icon: Icon(Icons.edit),
+                      ),
+                      IconButton(
+                        onPressed: widget.delete,
+                        icon: Icon(Icons.delete),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    widget.todoModel.desc,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

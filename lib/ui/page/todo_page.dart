@@ -1,5 +1,5 @@
 import 'package:card_page/model/todo_model.dart';
-import 'package:card_page/ui/widget/todo_bottom_shet.dart';
+import 'package:card_page/ui/page/add_todo_page.dart';
 import 'package:card_page/ui/widget/todo_card.dart';
 import 'package:flutter/material.dart';
 
@@ -13,9 +13,17 @@ class TodoPage extends StatefulWidget {
 class _TodoPageState extends State<TodoPage> {
   List<TodoModel> todos = [
     TodoModel(
-      dene: false,
-      desc: 'Сегодня хочу рано встать, меня ждут вуликие дела',
-      title: 'По завтракать',
+      desc:
+          'Description of the note this can be any contentote this can be any content',
+      title: 'Title',
+    ),
+    TodoModel(
+      desc: 'Description of the note this can be any content',
+      title: 'Title',
+    ),
+    TodoModel(
+      desc: 'Description of the note this can be any content',
+      title: 'Title',
     ),
   ];
   @override
@@ -24,19 +32,6 @@ class _TodoPageState extends State<TodoPage> {
       body: Column(
         children: [
           SizedBox(height: 60),
-          Padding(
-            padding: EdgeInsetsGeometry.symmetric(horizontal: 10),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'Поиск..',
-                prefix: Icon(Icons.search),
-                contentPadding: EdgeInsets.symmetric(vertical: 17),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-              ),
-            ),
-          ),
           Expanded(
             child: todos.isNotEmpty
                 ? ListView.builder(
@@ -50,38 +45,19 @@ class _TodoPageState extends State<TodoPage> {
                             todos.removeAt(index);
                           });
                         },
-                        edit: () {
-                          showModalBottomSheet(
-                            context: context,
-                            builder: (context) => TodoBottomShet(
-                              add: (todo) {
-                                setState(() {
-                                  todos[index] = todo;
-                                });
-                              },
-                              todoModel: todos[index],
-                            ),
-                          );
-                        },
+                        edit: () {},
                       );
                     },
                   )
-                : Center(child: Text('Пусто')),
+                : Center(child: Text('Nothing found :(')),
           ),
         ],
       ),
       floatingActionButton: InkWell(
         onTap: () {
-          showModalBottomSheet(
-            context: context,
-            isScrollControlled: true,
-            builder: (context) => TodoBottomShet(
-              add: (todo) {
-                setState(() {
-                  todos.add(todo);
-                });
-              },
-            ),
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddTodoPage()),
           );
         },
         child: Container(
